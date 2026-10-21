@@ -176,8 +176,8 @@ const P={x:0,y:0,z:0,vy:0,yaw:0,pitch:0};let hp=100,alive=false,kills=0,name='ل
 const W=[{n:'AK-47',dmg:24,rate:.1,mag:30,sp:.025,auto:1,rng:150,rl:2,col:0x2a2118},{n:'قناصة دراغونوف',dmg:95,rate:1.3,mag:5,sp:0,auto:0,rng:300,rl:3,col:0x1a1a1a},{n:'مسدس',dmg:20,rate:.28,mag:12,sp:.015,auto:0,rng:80,rl:1.2,col:0x333333}];
 let cw=2,res=60;const have=[0,0,1];const sw=i=>{if(have[i]){cw=i;rel=0}};const ammo=W.map(w=>w.mag);let lastF=0,rel=0;
 const vm=bx(.09,.13,.7,0x2a2118);vm.position.set(.22,-.22,-.55);cam.add(vm);
-function spawn(){const a=Math.random();P.x=team===1?-190+Math.random()*10:190-Math.random()*10;P.z=(Math.random()-.5)*300;while(blocked(P.x,P.z,.5))P.z+=2;P.y=0;P.vy=0;P.yaw=team===1?-Math.PI/2:Math.PI/2;P.pitch=0;hp=100;alive=true;have[0]=have[1]=0;have[2]=1;cw=2;res=60;rel=0;crouch=false;ammo.forEach((_,i)=>ammo[i]=W[i].mag)}
-$('go').onclick=()=>{if(!team){ST.textContent='اختر فريقاً أولاً';return}if(!G){ST.textContent='لا يوجد اتصال أونلاين حالياً';return}
+function spawn(){const a=Math.random();P.x=team===1?-190+Math.random()*10:190-Math.random()*10;P.z=(Math.random()-.5)*300;for(let i=0;i<80&&blocked(P.x,P.z,.5);i++)P.z=(Math.random()-.5)*300;P.y=0;P.vy=0;P.yaw=team===1?-Math.PI/2:Math.PI/2;P.pitch=0;hp=100;alive=true;have[0]=have[1]=0;have[2]=1;cw=2;res=60;rel=0;crouch=false;ammo.forEach((_,i)=>ammo[i]=W[i].mag)}
+$('go').onclick=()=>{if(!team){ST.textContent='اختر فريقاً أولاً';alert('اختر فريقاً أولاً: اضغط على «أسود بابل» أو «نسور آشور» ثم اضغط ادخل المعركة');return}if(!G){ST.textContent='لا يوجد اتصال أونلاين حالياً';return}
  name=($('nm').value.trim()||'لاعب').slice(0,14);try{localStorage.setItem('zq_nm',name)}catch(e){}
  if(teamCount(team)>=10){ST.textContent='الفريق ممتلئ';return}
  $('menu').style.display='none';$('hud').style.display='block';$('mm').style.display='block';if(isTouch)$('mob').style.display='block';started=true;kills=0;spawn();pushP();if(!isTouch)try{cv.requestPointerLock()}catch(e){}};
